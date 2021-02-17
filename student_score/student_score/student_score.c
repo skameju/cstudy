@@ -26,6 +26,6 @@ int main(void)
 	average = sum / student_num;
 
 	printf("Æò±Õ : %d", average);
-	free();
+	free(student_score);
 	return 0;
 }
