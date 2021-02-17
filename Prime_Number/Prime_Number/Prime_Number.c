@@ -19,7 +19,7 @@ int main(void)
 		scanf("%d", arr+i);
 
 		//소수가 아닐 경우 숫자의 개수에서 -1을 해줌
-		if (arr[i] == 1)
+		if (arr[i] <= 1)
 		{
 			primeNumber--;
 		}
