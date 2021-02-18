@@ -4,11 +4,11 @@
 
 int main(void)
 {
-	char str1[100];
-	char str2[100];
+	char* str1 = malloc(sizeof(char) * 100);
+	char* str2 = malloc(sizeof(char) * 100);
 
-	gets_s(str1, sizeof(str1));
-	gets_s(str2, sizeof(str2));
+	gets_s(str1);
+	gets_s(str2);
 
 
 	if (strlen(str1) > strlen(str2))
@@ -25,6 +25,8 @@ int main(void)
 		printf(str1);
 	}
 
+	free(str1);
+	free(str2);
 
 	return 0;
 }
