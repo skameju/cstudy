@@ -1,32 +1,62 @@
+// header.c
 #include "header.h"
+
 
 void LoadMaze(char num)
 {
-	char path[20] = "./Maze";
-	strcat(path, &num);
-	strcat(path, ".txt");
-	//path는 ./Maze(num).txt
+    char path[20] = "./Maze";
+    strcat(path, &num);
+    strcat(path, ".txt");
 
-	char str_tmp[50] = { 0 , };
-	FILE* f = fopen(&path, "r");
+    char str_tmp[50] = { 0, };
+    FILE* f = fopen(&path, "r");
 
-	for (int i = 0; i < SIZE; i++)
-	{
-		fgets(str_tmp, 50, f);
-		char* ptr = strtok(str_tmp, "\t");
-		for (int j = 0; j < SIZE; j++)
-		{
-			maze[i][j] = *ptr;
-			ptr = strtok(NULL, "\t");//19번째줄에서 자르고 남은 문자열을 다시 반환, \t을 기준으로 자름.
-		}
-	}
-	fclose(f);
+    for (int i = 0; i < SIZE; i++)
+    {
+        fgets(str_tmp, 50, f);
+        char* ptr = strtok(str_tmp, "\t");
+        for (int j = 0; j < SIZE; j++)
+        {
+            maze[i][j] = *ptr;
+            ptr = strtok(NULL, "\t");
+        }
+    }
+    fclose(f);
 }
 
 void GotoXY(int x, int y)
 {
-	COORD Pos;
-	Pos.X = x;
-	Pos.Y = y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+    COORD Pos;
+    Pos.X = x;
+    Pos.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+}
+
+void PrintMazeGame()
+{
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        GotoXY(XP, YP + i);
+        for (int j = 0; j < SIZE; j++)
+        {
+            if (maze[i][j] == '1')
+                printf("■");
+            else if (maze[i][j] == 'y')
+                printf("★");
+            else if (maze[i][j] == '0')
+                printf("□");
+            else
+                printf("●");
+        }
+        puts("");
+    }
+}
+
+void CursorView(char show)
+{
+    CONSOLE_CURSOR_INFO ConsoleCursor;
+    ConsoleCursor.bVisible = show;
+    ConsoleCursor.dwSize = 1;
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &ConsoleCursor);
 }
