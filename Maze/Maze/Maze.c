@@ -19,4 +19,4 @@ int main(void)
     {
         PrintMazeGame();
     }
-}
+}//12ÀÏÂ÷ ³¡
