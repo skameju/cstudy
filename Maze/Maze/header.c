@@ -1,4 +1,3 @@
-// header.c
 #include "header.h"
 
 
@@ -59,4 +58,39 @@ void CursorView(char show)
     ConsoleCursor.bVisible = show;
     ConsoleCursor.dwSize = 1;
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &ConsoleCursor);
+}
+
+void MoveMaze()
+{
+    int nkey;
+
+    if (_kbhit())
+    {
+        nkey = _getch();
+
+        if (nkey == ARROW)
+        {
+            nkey = _getch();
+            switch (nkey)
+            {
+            case UP:
+                printf("위 ");
+                break;
+
+            case DOWN:
+                printf("아래 ");
+                break;
+
+            case LEFT:
+                printf("왼쪽 ");
+                break;
+
+            case RIGHT:
+                printf("오른쪽 ");
+                break;
+            }
+        }
+
+    }
+
 }

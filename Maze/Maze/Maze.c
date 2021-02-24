@@ -1,9 +1,9 @@
-// main.c
-
 #include "header.h"
+
 
 int main(void)
 {
+
     char level;
     CursorView(0);
 
@@ -18,5 +18,6 @@ int main(void)
     while (1)
     {
         PrintMazeGame();
+        MoveMaze();
     }
-}//12ÀÏÂ÷ ³¡
+}
