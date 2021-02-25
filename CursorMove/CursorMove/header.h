@@ -13,11 +13,13 @@
 #define DOWN 80
 #define ARROW 224
 
-#define XP 40
-#define YP 6
-
-void Move();
+#define XP 2
+#define YP 2
+#define LINE 30
+void Move(int* x, int* y);
 void CursorDel(char show);
 void GotoXY(int x, int y);
+void PrintLine();
+void IsFinish();
 
 #endif

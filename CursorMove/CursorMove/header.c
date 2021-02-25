@@ -13,38 +13,30 @@ void Move(int* x, int* y)
 		if (nkey == ARROW)
 		{
 			nkey = _getch();
-			GotoXY(*x, *y); printf("  ");
+			GotoXY(*x, *y); printf(" ");
 			switch (nkey)
 			{
 			case UP:
-				if (*y > 0)//네모가 맨 위에 있을 때 더는 위로 가지 못하므로 if문을 통해 그 자리에 있게 해준다.
+				if (*y > 0)
 				{
-					GotoXY(*x, --(*y)); printf("□");//네모가 위로
-				}
-				else
-				{
-					GotoXY(*x, *y); printf("□");
+					--(*y);
 				}
 				break;
 			case DOWN:
-				GotoXY(*x, ++(*y)); printf("□");//네모가 아래로
+				++(*y);
 				break;
 			case LEFT:
-				if (*x > 0)//맨 왼쪽에 있을 때 더는 왼쪽으로 가지 못하므로 그 자리에 있게 해준다.
+				if (*x > 0)
 				{
 					(*x) -= 2;
-					GotoXY(*x, *y); printf("□");//네모가 왼쪽으로
-				}
-				else
-				{
-					GotoXY(*x, *y); printf("□");
 				}
 				break;
 			case RIGHT:
 				(*x) += 2;
-				GotoXY(*x, *y); printf("□");//네모가 오른쪽으로
+				IsFinish(*x);
 				break;
 			}
+			GotoXY(*x, *y); printf("0");
 		}
 	}
 }
@@ -63,4 +55,22 @@ void GotoXY(int x, int y)
 	Pos.X = x;
 	Pos.Y = y;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+}
+
+void PrintLine()
+{
+	for (int i = 0; i < 40; i++)
+	{
+		GotoXY(LINE, i);
+		printf("l");
+	}
+}
+
+void IsFinish(int x)
+{
+	if (x == LINE)
+	{
+		system("cls");
+		exit(0);
+	}
 }
