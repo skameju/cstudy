@@ -1,5 +1,5 @@
+//header.c
 #include "header.h"
-
 
 void LoadMaze(char num)
 {
@@ -60,37 +60,111 @@ void CursorView(char show)
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &ConsoleCursor);
 }
 
-void MoveMaze()
+
+void MoveMaze(int* row, int* col)
 {
     int nkey;
-
     if (_kbhit())
     {
         nkey = _getch();
 
-        if (nkey == ARROW)
+        if (nkey == 224)
         {
             nkey = _getch();
             switch (nkey)
             {
             case UP:
-                printf("위 ");
+                if (!(IsBlock(*row - 1, *col)))
+                {
+                    maze[*row][*col] = '0';
+                    maze[*row - 1][*col] = 'x';
+                    *row -= 1;
+                }
+                else if (IsFinish(*row - 1, *col))
+                {
+                    maze[*row][*col] = '0';
+                    maze[*row - 1][*col] = 'x';
+                    PrintMazeGame();
+                    Complete();
+                }
                 break;
 
             case DOWN:
-                printf("아래 ");
+                if (!(IsBlock(*row + 1, *col)))
+                {
+                    maze[*row][*col] = '0';
+                    maze[*row + 1][*col] = 'x';
+                    *row += 1;
+                }
+                else if (IsFinish(*row + 1, *col))
+                {
+                    maze[*row][*col] = '0';
+                    maze[*row + 1][*col] = 'x';
+                    PrintMazeGame();
+                    Complete();
+                }
                 break;
 
             case LEFT:
-                printf("왼쪽 ");
+                if (!(IsBlock(*row, *col - 1)))
+                {
+                    maze[*row][*col] = '0';
+                    maze[*row][*col - 1] = 'x';
+                    *col -= 1;
+                }
+                else if (IsFinish(*row, *col - 1))
+                {
+                    maze[*row][*col] = '0';
+                    maze[*row][*col - 1] = 'x';
+                    PrintMazeGame();
+                    Complete();
+                }
                 break;
 
             case RIGHT:
-                printf("오른쪽 ");
+                if (!(IsBlock(*row, *col + 1)))
+                {
+                    maze[*row][*col] = '0';
+                    maze[*row][*col + 1] = 'x';
+                    *col += 1;
+                }
+                else if (IsFinish(*row, *col + 1))
+                {
+                    maze[*row][*col] = '0';
+                    maze[*row][*col + 1] = 'x';
+                    PrintMazeGame();
+                    Complete();
+                }
                 break;
             }
         }
-
     }
+}
 
+int IsBlock(int i, int j)
+{
+    if (maze[i][j] == '1' || maze[i][j] == 'y')
+        return 1;
+    else
+        return 0;
+}
+
+int IsFinish(int i, int j)
+{
+    if (maze[i][j] == 'y')
+        return 1;
+    else
+        return 0;
+}
+
+void Complete()
+{
+    end = clock();
+    res = (float)(end - start) / CLOCKS_PER_SEC;
+
+    GotoXY(XP, YP + SIZE);
+    printf("Complete!\n");
+    GotoXY(XP, YP + SIZE + 1);
+    printf("경과시간 : %.2f초", res);
+    exit(0);
 }
